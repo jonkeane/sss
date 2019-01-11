@@ -7,6 +7,8 @@ if(interactive()) library(testthat)
 sampleRoot <- system.file("sampledata", package = "sss")
 filenameSSS <- file.path(sampleRoot, "sample-1.sss")
 filenameASC <- file.path(sampleRoot, "sample-1.asc")
+filenameSSSalt <- file.path(sampleRoot, "sample-1-alt.sss")
+filenameASCalt <- file.path(sampleRoot, "sample-1-alt.asc")
 
 rest <- structure(list(
   variables = structure(list(
@@ -75,4 +77,18 @@ test_that("parseSSSmetadata works", {
   expect_equal(test$codes, 
                rest$codes)
   
+})
+
+test_that("parseSSSmetadata works with a more decipher-flavored alternate", {
+
+    md <- readSSSmetadata(filenameSSSalt)
+    test <- parseSSSmetadata(md)
+    expect_is(test,"list")
+    expect_equal(test$variables$subfields,
+                 rest$variables$subfields)
+    expect_equal(test$variables,
+                 rest$variables)
+    expect_equal(test$codes,
+                 rest$codes)
+
 })

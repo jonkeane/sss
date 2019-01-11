@@ -21,6 +21,7 @@ xml_child_attr <- function(node, name, attr){
 #' @keywords internal
 getSSSrecord <- function(node){
   p <- as.character(xml_child_attrs(node, "position"))
+  names(p) <- names(xml_child_attrs(node, "position"))
   if (inherits(xml_child(node, "spread"), "xml_missing")){
     subfields <- 0
     width <- 0
@@ -32,11 +33,11 @@ getSSSrecord <- function(node){
       width <- 1
     }
   }
-  pfrom <- p[[1]]
+  pfrom <- p[["start"]]
   if (length(p) == 2){
-    pto <- p[[2]]
+    pto <- p[["finish"]]
   } else {
-    pto <- p[[1]]
+    pto <- p[["start"]]
   }
   fastdf(list(
       ident      = as.character(xml_attr(node, "ident")),
